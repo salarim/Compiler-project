@@ -1,0 +1,85 @@
+Program -> Save2 DeclarationList eOF
+Save2 -> '' #saveJmpToMain
+DeclarationList -> DeclarationList Declaration
+DeclarationList -> Declaration
+Declaration -> VarDeclaration
+Declaration -> FunDeclaration
+VarDeclaration -> int iD SetScope;
+VarDeclaration -> int iD SetScope [ nUM ] ;
+SetScop -> '' #setScope
+FunDeclaration -> int iD Set1 ( Params ) CompoundStmt
+Set1 -> '' #setFunctionAddr
+FunDeclaration -> void iD Set1 Jmp1 ( Params ) CompoundStmt
+Jmp1 -> '' #jmpToMain
+Params -> ParamList
+Params -> void
+ParamList -> ParamList , Param AddParam
+AddParam -> '' #addParam
+ParamList -> Param AddParam
+Param -> int iD Pid1
+Pid1 -> '' #pid
+Param -> int iD Pid1 [ ]
+CompoundStmt -> { AddScope LocalDeclarations StatementList } SubScope
+AddScope -> '' #addScope
+SubScope -> '' #subScope
+LocalDeclarations -> LocalDeclarations VarDeclaration
+LocalDeclarations -> ''
+StatementList -> StatementList Statement
+StatementList -> ''
+Statement -> ExpressionStmt
+Statement -> CompoundStmt
+Statement -> SelectionStmt
+Statement -> IterationStmt
+Statement -> ReturnStmt
+Statement -> output ( Expression ) ; #output
+ExpressionStmt -> Var = Expression Assign1 ;
+Assign1 -> '' #assign
+ExpressionStmt -> ;
+SelectionStmt -> if ( GenExpression ) Save1 Statement Ifjpf1
+Save1 -> '' #save
+Ifjpf1 -> '' #ifJpf
+SelectionStmt -> if ( GenExpression ) Save1 Statement else IfJpfSave1 Statement Ifjp1
+Ifjp1 -> '' #ifJp
+IfJpfSave1 -> '' #ifJpfSave
+IterationStmt -> while Label1 ( GenExpression ) Save1 Statement WhileFunc1
+Label1 -> '' #label
+WhileFunc1 -> '' #whileFunc
+ReturnStmt -> return Return1 ;
+Return1 -> '' #returnFunc
+ReturnStmt -> return GenExpression ReturnFunc1 ;
+ReturnFunc1 -> '' #returnFunc
+Var -> iD FindAddr
+Var -> iD FindAddr [ Expression ] GetArrayPointer1
+FindAddr -> '' #findAddr
+GetArrayPointer1 -> '' #getArrayPointer
+GenExpression -> RelExpression
+GenExpression -> Expression
+RelExpression -> RelExpression && RelTerm #logicalAnd
+RelExpression -> RelTerm
+RelTerm -> Expression == Expression Equal1
+Equal1 -> '' #equal
+RelTerm -> Expression < Expression Less1
+Less1 -> '' #less
+Expression -> Expression + Term Add
+Add -> '' #add
+Expression -> Expression - Term Sub1
+Sub1 -> '' #sub
+Expression -> Term
+Term -> Term * Factor Mult1
+Mult1 -> '' #mult
+Term -> Term / Factor Div1
+Div1 -> '' #div
+Term -> Factor
+Factor -> ( Expression )
+Factor -> Var
+Factor -> Call
+Factor -> nUM Pval1
+Pval1 -> '' #pval
+Call -> iD LastFuncCalled1 ( Args ) Call1
+Call1 -> '' #call
+LastFuncCalled1 -> '' #lastFuncCalled
+Args -> ArgList AssignParams1
+AssignParams1 -> '' #assignParams
+Args -> '' #assignParams
+ArgList -> ArgList , Expression
+ArgList -> Expression

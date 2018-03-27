@@ -1,0 +1,85 @@
+Program -> Save2 DeclarationList EOF
+Save2 -> ''
+DeclarationList -> DeclarationList Declaration
+DeclarationList -> Declaration
+Declaration -> VarDeclaration
+Declaration -> FunDeclaration
+VarDeclaration -> int ID SetScope ;
+VarDeclaration -> int ID SetScope [ NUM ] ;
+SetScope -> ''
+FunDeclaration -> int ID Set1 ( Params ) CompoundStmt
+Set1 -> '' 
+FunDeclaration -> void ID Set1 Jmp1 ( Params ) CompoundStmt
+Jmp1 -> ''
+Params -> ParamList
+Params -> void
+ParamList -> ParamList , Param AddParam
+AddParam -> ''
+ParamList -> Param AddParam
+Param -> int ID Pid1
+Pid1 -> ''
+Param -> int ID Pid1 [ ]
+CompoundStmt -> { AddScope LocalDeclarations StatementList } SubScope
+AddScope -> ''
+SubScope -> ''
+LocalDeclarations -> LocalDeclarations VarDeclaration
+LocalDeclarations -> ''
+StatementList -> StatementList Statement
+StatementList -> ''
+Statement -> ExpressionStmt
+Statement -> CompoundStmt
+Statement -> SelectionStmt
+Statement -> IterationStmt
+Statement -> ReturnStmt
+Statement -> output ( Expression ) ;
+ExpressionStmt -> Var = Expression Assign1 ;
+Assign1 -> ''
+ExpressionStmt -> ;
+SelectionStmt -> if ( GenExpression ) Save1 Statement Ifjpf1
+Save1 -> ''
+Ifjpf1 -> ''
+SelectionStmt -> if ( GenExpression ) Save1 Statement else IfJpfSave1 Statement Ifjp1
+Ifjp1 -> ''
+IfJpfSave1 -> ''
+IterationStmt -> while Label1 ( GenExpression ) Save1 Statement WhileFunc1
+Label1 -> ''
+WhileFunc1 -> ''
+ReturnStmt -> return Return1 ;
+Return1 -> ''
+ReturnStmt -> return GenExpression ReturnFunc1 ;
+ReturnFunc1 -> ''
+Var -> ID FindAddr
+Var -> ID FindAddr [ Expression ] GetArrayPointer1
+FindAddr -> ''
+GetArrayPointer1 -> ''
+GenExpression -> RelExpression
+GenExpression -> Expression
+RelExpression -> RelExpression && RelTerm
+RelExpression -> RelTerm
+RelTerm -> Expression == Expression Equal1
+Equal1 -> ''
+RelTerm -> Expression < Expression Less1
+Less1 -> ''
+Expression -> Expression + Term Add
+Add -> ''
+Expression -> Expression - Term Sub1
+Sub1 -> ''
+Expression -> Term
+Term -> Term * Factor Mult1
+Mult1 -> ''
+Term -> Term / Factor Div1
+Div1 -> ''
+Term -> Factor
+Factor -> ( Expression )
+Factor -> Var
+Factor -> Call
+Factor -> NUM Pval1
+Pval1 -> ''
+Call -> ID LastFuncCalled1 ( Args ) Call1
+Call1 -> ''
+LastFuncCalled1 -> ''
+Args -> ArgList AssignParams1
+AssignParams1 -> ''
+Args -> ''
+ArgList -> ArgList , Expression
+ArgList -> Expression
